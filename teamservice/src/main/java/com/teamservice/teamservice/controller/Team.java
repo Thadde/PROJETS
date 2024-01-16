@@ -24,4 +24,7 @@ public class Team {
 
         return team;
     }
+
+    public void updateTeamDetails(Object name, Object city) {
+    }
 }

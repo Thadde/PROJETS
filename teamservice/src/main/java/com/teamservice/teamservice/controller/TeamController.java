@@ -23,12 +23,38 @@ public class TeamController {
     }
     @PostMapping
     public ResponseEntity<String> createTeam(@RequestBody Team newTeam) {
-        // Ajouter la nouvelle équipe à la liste statique
+
         BasicStatusManager teamList = null;
         teamList.add((Status) newTeam);
 
 
         return new ResponseEntity<>("Nouvelle équipe ajoutée avec succès", HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateTeam(@PathVariable Long id, @RequestBody TeamRequest teamRequest) {
+        Team existingTeam = Team.getTeamById(id);
+
+        if (existingTeam != null) {
+            existingTeam.updateTeamDetails(teamRequest.getName(), teamRequest.getCity());
+
+            return ResponseEntity.ok("Équipe mise à jour avec succès");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTeam(@PathVariable Long id) {
+        Team existingTeam = Team.getTeamById(id);
+
+        if (existingTeam != null) {
+
+
+            return ResponseEntity.ok("Équipe supprimée avec succès");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 
